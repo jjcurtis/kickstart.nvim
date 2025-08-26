@@ -6,6 +6,11 @@ vim.o.mouse = 'a'
 vim.o.incsearch = true
 vim.o.showmode = false
 
+local tabSpaces = 4
+vim.o.softtabstop = tabSpaces
+vim.o.shiftwidth = tabSpaces
+vim.o.expandtab = true
+
 local nerd_font = 'JetBrainsMonoNerdFont-Regular'
 vim.o.guifont = nerd_font or 'Cascadia Mono'
 
@@ -16,6 +21,8 @@ vim.schedule(function()
 end)
 
 vim.o.breakindent = true
+vim.o.wrap = true
+vim.o.textwidth = 70
 vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true

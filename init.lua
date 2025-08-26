@@ -1,6 +1,6 @@
-require 'vim-options'
-require 'keymaps'
-require 'autocommands'
+require 'configs/vim-options'
+require 'configs/keymaps'
+require 'configs/autocommands'
 
 -- Lazy
 
@@ -17,4 +17,4 @@ end
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
-require('lazy').setup('plugins', require 'lazy-options')
+require('lazy').setup('plugins', require 'configs/lazy-options')
