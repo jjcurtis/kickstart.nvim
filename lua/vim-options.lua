@@ -1,11 +1,15 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.g.have_nerd_font = false
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.mouse = 'a'
 vim.o.incsearch = true
 vim.o.showmode = false
+
+local nerd_font = 'JetBrainsMonoNerdFont-Regular'
+vim.o.guifont = nerd_font or 'Cascadia Mono'
+
+vim.g.have_nerd_font = (vim.o.guifont == nerd_font) and true or false
 
 vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
