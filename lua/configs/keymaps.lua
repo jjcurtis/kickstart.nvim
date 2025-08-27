@@ -13,6 +13,25 @@ vim.keymap.set('n', '<leader>g', function()
   vim.cmd 'Neogit'
 end, { desc = 'Neo[G]it' })
 
+-- Change Directory
+vim.keymap.set('n', '<leader>c', function()
+  vim.ui.input({
+    prompt = 'New working directory: ',
+    completion = 'dir',
+  }, function(input)
+    if input and input ~= '' then
+      local success, err = pcall(function()
+        vim.api.nvim_set_current_dir(input)
+      end)
+      if not success then
+        vim.notify('Failed to change directory: ' .. err, vim.log.levels.ERROR)
+      else
+        vim.notify('Changed working directory to: ' .. input)
+      end
+    end
+  end)
+end, { desc = 'Change working directory' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
