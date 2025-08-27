@@ -13,6 +13,11 @@ vim.keymap.set('n', '<leader>g', function()
   vim.cmd 'Neogit'
 end, { desc = 'Neo[G]it' })
 
+-- Toggle terminal
+vim.keymap.set({ 'n', 't' }, '<C-t>', function()
+  vim.cmd 'ToggleTerm'
+end, { desc = 'Toggle Terminal' })
+
 -- Change Directory
 vim.keymap.set('n', '<leader>c', function()
   vim.ui.input({
