@@ -5,3 +5,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.on_yank()
   end,
 })
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  desc = 'Run Neotree on startup',
+  group = vim.api.nvim_create_augroup('neotree-startup', { clear = true }),
+  callback = function()
+    vim.cmd 'Neotree current'
+  end,
+})
