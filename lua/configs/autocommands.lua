@@ -10,6 +10,8 @@ vim.api.nvim_create_autocmd('VimEnter', {
   desc = 'Run Neotree on startup',
   group = vim.api.nvim_create_augroup('neotree-startup', { clear = true }),
   callback = function()
-    vim.cmd 'Neotree current'
+    if vim.fn.expand '%:t' == '' then
+      vim.cmd 'Neotree current'
+    end
   end,
 })
