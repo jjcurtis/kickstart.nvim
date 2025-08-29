@@ -56,18 +56,39 @@ local config = {
       },
     },
   },
-
-  init_options = {
-    bundles = {
-      vim.fn.glob('$HOME/.m2/java-debug/com/microsoft/java/com.microsoft.java.debug.plugin/0.53.1/com.microsoft.java.debug.plugin-*.jar', 1),
-    },
-  },
 }
+
+local bundles = {
+  vim.fn.glob('$HOME/.m2/java-debug/com/microsoft/java/com.microsoft.java.debug.plugin/0.53.1/com.microsoft.java.debug.plugin-*.jar', 1),
+}
+
+local java_test_bundles = vim.split(vim.fn.glob('$HOME/.dotfiles/.config/nvim/vscode-java-test/server/*.jar', 1), '\n')
+local excluded = {
+  'com.microsoft.java.test.runner-jar-with-dependencies.jar',
+  'jacocoagent.jar',
+}
+for _, java_test_jar in ipairs(java_test_bundles) do
+  local fname = vim.fn.fnamemodify(java_test_jar, ':t')
+  if not vim.tbl_contains(excluded, fname) then
+    table.insert(bundles, java_test_jar)
+  end
+end
+
+config['init_options'] = {
+  bundles = bundles,
+}
+
 require('jdtls').start_or_attach(config)
 
-vim.keymap.set('n', '<leader>co', "<Cmd>lua require'jdtls'.organize_imports()<CR>", { desc = 'Organize Imports' })
-vim.keymap.set('n', '<leader>crv', "<Cmd>lua require('jdtls').extract_variable()<CR>", { desc = 'Extract Variable' })
-vim.keymap.set('v', '<leader>crv', "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", { desc = 'Extract Variable' })
-vim.keymap.set('n', '<leader>crc', "<Cmd>lua require('jdtls').extract_constant()<CR>", { desc = 'Extract Constant' })
-vim.keymap.set('v', '<leader>crc', "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", { desc = 'Extract Constant' })
-vim.keymap.set('v', '<leader>crm', "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", { desc = 'Extract Method' })
+vim.keymap.set('n', '<leader>Jo', "<Cmd>lua require'jdtls'.organize_imports()<CR>", { desc = 'Organize Imports' })
+vim.keymap.set('n', '<leader>Jev', "<Cmd>lua require('jdtls').extract_variable()<CR>", { desc = 'Extract Variable' })
+vim.keymap.set('v', '<leader>Jev', "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", { desc = 'Extract Variable' })
+vim.keymap.set('n', '<leader>Jec', "<Cmd>lua require('jdtls').extract_constant()<CR>", { desc = 'Extract Constant' })
+vim.keymap.set('v', '<leader>Jec', "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", { desc = 'Extract Constant' })
+vim.keymap.set('v', '<leader>Jem', "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", { desc = 'Extract Method' })
+vim.keymap.set('n', '<leader>Jtc', function()
+  vim.cmd "lua require('jdtls').test_class()"
+end, { desc = 'Test Class' })
+vim.keymap.set('n', '<leader>Jtm', function()
+  vim.cmd "lua require('jdtls').test_nearest_method()"
+end, { desc = 'Test Nearest Method' })
