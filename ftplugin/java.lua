@@ -27,7 +27,7 @@ local config = {
     '-jar',
     vim.fn.glob(home .. '/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
     '-configuration',
-    home .. '/.local/share/nvim/mason/packages/jdtls/config_mac',
+    home .. '/.local/share/nvim/mason/packages/jdtls/config_linux',
     '-data',
     workspace_dir,
   },
@@ -58,7 +58,9 @@ local config = {
   },
 
   init_options = {
-    bundles = {},
+    bundles = {
+      vim.fn.glob('$HOME/.m2/java-debug/com/microsoft/java/com.microsoft.java.debug.plugin/0.53.1/com.microsoft.java.debug.plugin-*.jar', 1),
+    },
   },
 }
 require('jdtls').start_or_attach(config)
